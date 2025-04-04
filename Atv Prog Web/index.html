@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Veterinária</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">Clínica Vet</a>
+    </nav>
+
+    <!-- Página Inicial -->
+    <div class="container mt-4" id="inicio">
+        <h1>Bem-vindo à Clínica Veterinária</h1>
+        <p>Escolha uma das opções abaixo para continuar:</p>
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block" onclick="showScreen('cadastro')">Cadastro de Paciente</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-secondary btn-block" onclick="showScreen('login-paciente')">Login - Área do Paciente</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-success btn-block" onclick="showScreen('login-veterinario')">Login - Área do Veterinário</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Cadastro -->
+    <div class="container mt-4" id="cadastro" style="display: none;">
+        <h1>Cadastro de Paciente</h1>
+        <form id="cadastro-form">
+            <h4>Dados do Dono</h4>
+            <div class="mb-3">
+                <label for="nome-dono" class="form-label">Nome do Dono:</label>
+                <input type="text" class="form-control" id="nome-dono">
+            </div>
+            <div class="mb-3">
+                <label for="email-dono" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email-dono">
+            </div>
+            <div class="mb-3">
+                <label for="senha-dono" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="senha-dono">
+            </div>
+
+            <h4>Dados do Pet</h4>
+            <div class="mb-3">
+                <label for="nome-pet" class="form-label">Nome do Pet:</label>
+                <input type="text" class="form-control" id="nome-pet">
+            </div>
+            <div class="mb-3">
+                <label for="idade-pet" class="form-label">Idade:</label>
+                <input type="number" class="form-control" id="idade-pet">
+            </div>
+            <div class="mb-3">
+                <label for="peso-pet" class="form-label">Peso (kg):</label>
+                <input type="number" class="form-control" id="peso-pet">
+            </div>
+            <div class="mb-3">
+                <label for="altura-pet" class="form-label">Altura (cm):</label>
+                <input type="number" class="form-control" id="altura-pet">
+            </div>
+            <button type="button" class="btn btn-success" onclick="cadastrarDonoPet()">Cadastrar</button>
+        </form>
+    </div>
+
+    <!-- Outras áreas como antes -->
+    <div class="container mt-4" id="login-paciente" style="display: none;">
+        <h1>Login - Paciente</h1>
+        <form id="login-paciente-form">
+            <div class="mb-3">
+                <label for="email-paciente" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email-paciente">
+            </div>
+            <div class="mb-3">
+                <label for="senha-paciente" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="senha-paciente">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="loginPaciente()">Entrar</button>
+        </form>
+    </div>
+
+    <div class="container mt-4" id="login-veterinario" style="display: none;">
+        <h1>Login - Veterinário</h1>
+        <form id="login-veterinario-form">
+            <div class="mb-3">
+                <label for="senha-veterinario" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="senha-veterinario">
+            </div>
+            <button type="button" class="btn btn-success" onclick="loginVeterinario()">Entrar</button>
+        </form>
+    </div>
+
+    <!-- Área do Paciente e Área do Veterinário -->
+    <div class="container mt-4" id="area-paciente" style="display: none;">
+        <h1>Área do Paciente</h1>
+        <div class="alert alert-info">Bem-vindo à Área do Paciente</div>
+        <h2>Marcar Consulta</h2>
+        <form id="consulta-form">
+            <div class="mb-3">
+                <label for="data-consulta" class="form-label">Data:</label>
+                <input type="date" class="form-control" id="data-consulta">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="agendarConsulta()">Marcar Consulta</button>
+        </form>
+        <hr>
+        <h2>Histórico de Consultas</h2>
+        <div id="historico-consultas"></div>
+    </div>
+
+    <div class="container mt-4" id="area-veterinario" style="display: none;">
+        <h1>Área do Veterinário</h1>
+        <div class="alert alert-info">Bem-vindo à Área do Veterinário</div>
+        <h2>Inserir Diagnóstico</h2>
+        <form id="diagnostico-form">
+            <div class="mb-3">
+                <label for="nome-pet-diagnostico" class="form-label">Nome do Pet:</label>
+                <input type="text" class="form-control" id="nome-pet-diagnostico">
+            </div>
+            <div class="mb-3">
+                <label for="diagnostico" class="form-label">Diagnóstico:</label>
+                <textarea class="form-control" id="diagnostico" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="medicamentos" class="form-label">Medicamentos:</label>
+                <textarea class="form-control" id="medicamentos" rows="3"></textarea>
+            </div>
+            <button type="button" class="btn btn-success" onclick="inserirDiagnostico()">Salvar Diagnóstico</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
